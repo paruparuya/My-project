@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     public float tackleForce = 8f;
     public float attackCooldown = 2f; // ƒ^ƒbƒNƒ‹‚ÌŠÔŠu
     private float lastAttackTime = -999f;
-    
+    public bool canControl = false;
 
     void Start()
     {
@@ -20,6 +20,10 @@ public class EnemyController : MonoBehaviour
    
     void Update()
     {
+        if (!canControl)
+            return;
+
+
         if (player == null) return;
 
         Vector3 direction = (player.position - transform.position);

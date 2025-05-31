@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float tackleForce = 8f;
     private Vector2 moveInput;
     private bool attack = true;
+    public bool canControl = false;
     
 
 
@@ -29,6 +30,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!canControl)
+            return;
+
+
         Vector3 move = transform.forward * moveInput.y * speed * Time.deltaTime;
         rb.MovePosition(rb.position + move);
 
@@ -66,6 +71,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
+        if (!canControl)
+            return;
+
         if (attack)
         {
             attack = false;
