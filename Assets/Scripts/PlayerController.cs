@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
        
         if (other.CompareTag("Ground"))
         {
-            rb.constraints &= ~RigidbodyConstraints.FreezeRotation;  // 回転制限を解除
+            rb.constraints = RigidbodyConstraints.None;  // 回転制限を解除
             GameManager.Instance.LoseText();
         }
     }

@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text countdownText;
     [SerializeField] private TMP_Text winOrLoseText;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private EnemyController enemyController;
+    //[SerializeField] private EnemyController[] enemies;  //複数の敵を動かすときのリスト
+    [SerializeField] private Transform spawnPoint;
+    [Header("敵プレハブリスト")]
+    [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
+    private EnemyController enemyController;  
+    private int currentEnemyIndex = 0;
     private bool gameResult = false;
 
 
@@ -57,8 +63,23 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainMode");
     }
 
+    private void SpawnEnemy()
+    {
+        if (currentEnemyIndex >= enemyPrefabs.Count)
+        {
+            Debug.Log("すべての敵が登場しました");
+            return;
+        }
+
+        GameObject enemyObj = Instantiate(enemyPrefabs[currentEnemyIndex], spawnPoint.position, Quaternion.identity);
+        enemyController = enemyObj.GetComponent<EnemyController>();
+        currentEnemyIndex++;
+    }
+
     private IEnumerator StartCountdown()
     {
+        SpawnEnemy();
+
         countdownText.text = "3";
         yield return new WaitForSeconds(1f);
 
@@ -74,6 +95,22 @@ public class GameManager : MonoBehaviour
         countdownText.gameObject.SetActive(false);
         playerController.canControl = true;
         enemyController.canControl = true;
+        
+        /*foreach (EnemyController enemy in enemies)  
+        {
+            enemy.canControl = true;
+        }*/
 
+    }
+
+    public void OnEnemyDefeated()
+    {
+        StartCoroutine(NextEnemy());
+    }
+
+    private IEnumerator NextEnemy()
+    {
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(StartCountdown());
     }
 }

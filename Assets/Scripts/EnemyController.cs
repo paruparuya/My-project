@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     private Rigidbody rb;
 
     public float speed = 3f;
@@ -15,6 +15,9 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        GameObject playerObj = GameObject.FindWithTag("Players");
+        player = playerObj.transform;
+
     }
 
    
@@ -49,8 +52,10 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Ground"))
         {
-            rb.constraints &= ~RigidbodyConstraints.FreezeRotation;  // ‰ñ“]§ŒÀ‚ğ‰ğœ
+            rb.constraints = RigidbodyConstraints.None; // ‰ñ“]§ŒÀ‚ğ‰ğœ
+            canControl = false;
             GameManager.Instance.WinText();
+            GameManager.Instance.OnEnemyDefeated();
         }
     }
 }

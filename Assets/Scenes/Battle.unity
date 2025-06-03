@@ -1951,6 +1951,12 @@ MonoBehaviour:
   winOrLoseText: {fileID: 1932028484}
   playerController: {fileID: 445676572}
   enemyController: {fileID: 719819659}
+  enemies:
+  - {fileID: 719819659}
+  - {fileID: 1872522247}
+  - {fileID: 791198769}
+  - {fileID: 508383607}
+  - {fileID: 71252029}
 --- !u!1 &1069061646
 GameObject:
   m_ObjectHideFlags: 0
