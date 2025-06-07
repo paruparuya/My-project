@@ -17,7 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
     private EnemyController enemyController;  
     private int currentEnemyIndex = 0;
-    private bool gameResult = false;
+    private bool gameResult = false;  //èüîsï\é¶ÇçXêVÇµÇ»Ç¢ÇÊÇ§Ç…
+    
 
 
     void Start()
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameResult)
         {
+            winOrLoseText.gameObject.SetActive(true);
             winOrLoseText.text = "Win";
             gameResult = true;
         }
@@ -53,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         if (!gameResult)
         {
+            winOrLoseText.gameObject.SetActive(true);
             winOrLoseText.text = "Lose";
             gameResult = true;
         }
@@ -67,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentEnemyIndex >= enemyPrefabs.Count)
         {
+            SceneManager.LoadScene("Finish");
             Debug.Log("Ç∑Ç◊ÇƒÇÃìGÇ™ìoèÍÇµÇ‹ÇµÇΩ");
             return;
         }
@@ -74,11 +78,16 @@ public class GameManager : MonoBehaviour
         GameObject enemyObj = Instantiate(enemyPrefabs[currentEnemyIndex], spawnPoint.position, Quaternion.identity);
         enemyController = enemyObj.GetComponent<EnemyController>();
         currentEnemyIndex++;
+        gameResult = false;
+        playerController.canControl = false;
     }
 
     private IEnumerator StartCountdown()
     {
         SpawnEnemy();
+        winOrLoseText.gameObject.SetActive(false); 
+        countdownText.gameObject.SetActive(true);
+
 
         countdownText.text = "3";
         yield return new WaitForSeconds(1f);
@@ -95,7 +104,8 @@ public class GameManager : MonoBehaviour
         countdownText.gameObject.SetActive(false);
         playerController.canControl = true;
         enemyController.canControl = true;
-        
+        countdownText.gameObject.SetActive(false);
+
         /*foreach (EnemyController enemy in enemies)  
         {
             enemy.canControl = true;

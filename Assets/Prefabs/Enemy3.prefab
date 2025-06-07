@@ -101,10 +101,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a4e9dcbb307bf42a83c0a54943d974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   speed: 5
-  tackleForce: 20
-  attackCooldown: 2
+  tackleForce: 50
+  attackCooldown: 1
   canControl: 0
 --- !u!136 &6215128569632859431
 CapsuleCollider:

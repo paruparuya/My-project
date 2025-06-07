@@ -101,9 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a4e9dcbb307bf42a83c0a54943d974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   speed: 5
-  tackleForce: 20
+  tackleForce: 10
   attackCooldown: 2
   canControl: 0
 --- !u!136 &5805819366810262013

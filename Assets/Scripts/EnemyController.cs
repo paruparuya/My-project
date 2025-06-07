@@ -11,13 +11,15 @@ public class EnemyController : MonoBehaviour
     public float attackCooldown = 2f; // ƒ^ƒbƒNƒ‹‚ÌŠÔŠu
     private float lastAttackTime = -999f;
     public bool canControl = false;
+    private bool hasTrigger = false;
+   
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         GameObject playerObj = GameObject.FindWithTag("Players");
         player = playerObj.transform;
-
+        Collider collider = GetComponent<Collider>();
     }
 
    
@@ -50,12 +52,19 @@ public class EnemyController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (hasTrigger) return;
+
         if (other.CompareTag("Ground"))
         {
+            hasTrigger = true;
+
             rb.constraints = RigidbodyConstraints.None; // ‰ñ“]§ŒÀ‚ğ‰ğœ
             canControl = false;
+            
             GameManager.Instance.WinText();
             GameManager.Instance.OnEnemyDefeated();
+
+           
         }
     }
 }
